@@ -3,12 +3,12 @@ LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/GPL-2.0;md5=801f80980d171dd6425610833a22dbe6"
 
 SRC_URI = " \
-    gitsm://github.com/lwfinger/rtl8723bu.git;protocol=https;rev=b5bad435151c7fa6fa1ef9c1923b6d7679df2430 \
-    file://0001-fix-makefile-for-openembedded.patch \
+    gitsm://github.com/lwfinger/rtl8723bu.git;protocol=https \
     file://0001-disable-proc-debug.patch \
     file://0001-disable-roaming.patch \
     file://be-less-verbose.patch \
 "
+SRCREV = "c849078a5209767d19321b7dded6a21d71619b2c"
 
 S = "${WORKDIR}/git"
 
@@ -17,8 +17,11 @@ inherit module
 # The inherit of module.bbclass will automatically name module packages with
 # "kernel-module-" prefix as required by the oe-core build environment.
 
+EXTRA_OEMAKE += "KSRC=${STAGING_KERNEL_DIR}"
+
 do_install() {
     # Module
-    install -d ${D}/lib/modules/${KERNEL_VERSION}/kernel/net/wireless
-    install -m 0644 8723bu.ko ${D}/lib/modules/${KERNEL_VERSION}/kernel/net/wireless/8723bu.ko
+    dest=${D}/lib/modules/${KERNEL_VERSION}/${PN}
+    install -d ${dest}
+    install -m 0644 8723bu.ko ${dest}
 }
