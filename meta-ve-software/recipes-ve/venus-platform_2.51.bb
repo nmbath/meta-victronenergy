@@ -13,12 +13,12 @@ PACKAGE_ARCH:container-gx = "${MACHINE_ARCH}"
 
 UPSTREAM_CHECK_GITTAGREGEX = "v(?P<pver>\S+)"
 SRC_URI = " \
-    gitsm://github.com/victronenergy/venus-platform.git;branch=master;protocol=ssh;user=git \
+    gitsm://github.com/mpvader/venus-platform.git;branch=mva/container;protocol=https \
     file://can.inc \
     file://venus_dbus_bridge_template.conf \
     file://venus_rpc_bridge_template.conf \
 "
-SRCREV = "315545977028e7643c31c5c1909f02921b0e28b7"
+SRCREV = "bdd746d41880e2c6077de9a5b5503c82036d7e6f"
 S = "${WORKDIR}/git"
 
 DAEMONTOOLS_RUN = "${@softlimit(d, data=100000000, stack=1000000, all=100000000)} ${bindir}/venus-platform"
